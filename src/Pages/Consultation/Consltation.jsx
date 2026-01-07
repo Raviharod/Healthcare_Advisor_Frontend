@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { doctorActions } from "../../slices/doctorSlice";
+import { notificationActions } from "../../slices/notificationSlice";
 
 import VideoUi from "../VideoCallUi/VideoUi";
 
@@ -89,17 +90,18 @@ function Consltation() {
 
   const handleSocketInfoForVideo = (name, socketId, isOnline) => {
     if (!isOnline) {
-      alert("Doctor is not online. Please try again later.");
+      dispatch(notificationActions.setNotificationMsg("Doctor is not online. Please try again later."));
       return;
     }
 
     if (!patientInfo) {
-      alert("Please login to start a video consultation.");
+      dispatch(notificationActions.setNotificationMsg("Please login to start a video consultation."));
       navigate("/login");
       return;
     }
 
-    console.log("reached to set doctor info")
+    console.log("reached to set doctor info");
+
     // Set doctor info in Redux
     dispatch(doctorActions.setDoctorSocketInfo({
       name: name,
@@ -110,7 +112,10 @@ function Consltation() {
     // Set invitation as pending
     dispatch(doctorActions.setInvitationPending({
       doctorName: name,
-      doctorSocketId: socketId
+      doctorSocketId: socketId,
+      patientName: patientInfo.name,
+      patientSocketId: socket.id,
+      patientId: patientInfo.id
     }));
 
     // Send invitation to doctor via socket
@@ -130,6 +135,7 @@ function Consltation() {
 
     // Navigate to video call page (will show "Inviting..." state)
     navigate("/enterVideo");
+    
   }
 
   // Set up socket listeners for invitation responses (only once)
@@ -157,7 +163,7 @@ function Consltation() {
   }, [patientInfo, dispatch, navigate]);
 
   return (
-    <div className="bg-[#f0f6ff] min-h-screen pb-8">
+    <div className="bg-[#e2eef3] min-h-screen pb-8">
       {/* <div className="h-50 w-3xl bg-amber-200 p-2">
         {onlineUsers.map((user)=>{
           return <li>{user.name}: {user.socketId}</li>
@@ -175,8 +181,8 @@ function Consltation() {
                     key={type.label}
                     className={`flex items-center gap-2 px-6 py-2 rounded-full font-semibold shadow-sm transition ${
                       selectedType === type.label
-                        ? "bg-[#1976D2] text-white"
-                        : "bg-[#64B5F6] text-white hover:bg-[#2196F3]"
+                        ? "bg-[#065084] text-white"
+                        : "bg-[#5b9dcc] text-white hover:bg-[#597c8279]"
                     }`}
                     onClick={() => setSelectedType(type.label)}
                   >
@@ -231,7 +237,7 @@ function Consltation() {
                           </button>
                           <Link
                             onClick={() => handleSocketInfoForVideo(doc._doc.name, doc.socketId, doc.isOnline)}
-                            to="/enterVideo"
+                            // to="/enterVideo"
                             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow transition"
                           >
                             <FaVideo /> Video Consult

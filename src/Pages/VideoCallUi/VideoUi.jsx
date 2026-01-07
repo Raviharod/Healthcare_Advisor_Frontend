@@ -56,7 +56,7 @@ function VideoUi({ localRef, remoteRef }) {
     <div className="bg-gray-50 min-h-screen flex flex-col">
       <div className="flex flex-col md:flex-row gap-4 p-4 h-[calc(100vh-32px)]">
         {/* Video Section */}
-        <div className="flex-1 bg-white rounded-2xl shadow-lg flex flex-col relative overflow-hidden">
+        <div className="flex-1 bg-white rounded-2xl shadow-md flex flex-col relative overflow-hidden">
           {/* Doctor Info */}
           <div className="absolute top-6 left-6 flex items-center gap-3 z-10">
             <img

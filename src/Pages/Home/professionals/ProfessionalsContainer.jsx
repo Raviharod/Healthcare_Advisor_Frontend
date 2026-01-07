@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ProfessionalsHead from "./professionalsHead";
+import ProfessionalsHead from "./ProfessionalsHead";
 import axios from "axios";
 import ProfessionalsBox from "./ProfessionalsBox";
 

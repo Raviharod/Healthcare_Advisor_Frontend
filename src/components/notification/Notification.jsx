@@ -2,6 +2,7 @@ import React from 'react';
 import { CircleX, ThumbsUp, Clock } from 'lucide-react';
 import { useSelector,useDispatch } from 'react-redux';
 import { notificationActions } from '../../slices/notificationSlice';
+import {motion} from "motion/react"
 
 const NotificationCard = () => {
     const currentTime = new Date().toLocaleString("en-US", {
@@ -21,7 +22,10 @@ const NotificationCard = () => {
 
   return (
     
-    <div className="flex w-auto items-center justify-center max-h-screen  p-4 fixed top-0 right-0 z-20">
+    <motion.div
+    animate={{y:[-100, -1]}}
+    transition={{duration:0.9, type:"spring", bounce:0.4}}
+     className="flex w-auto items-center justify-center max-h-screen  p-4 fixed top-0 right-0 z-20">
       {/* Main Container */}
       <div className="relative w-full max-w-2xl bg-[#111111] text-white rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105">
         
@@ -64,7 +68,7 @@ const NotificationCard = () => {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 };
 
